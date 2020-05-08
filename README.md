@@ -1,26 +1,7 @@
-# wsearch (wsearch)
+# Sele (sele)
 
-A POS account search app
+A POS app for small business to keep record of their dialy transactons and store customer account details
 
-## Install the dependencies
-```bash
-npm install
-```
+### visite site
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
-
-### Lint the files
-```bash
-npm run lint
-```
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+[sele.online](https://wwww.sele.online).

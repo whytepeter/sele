@@ -1,6 +1,6 @@
 const state = {
   showHome: "app-account",
-  pageTitle: "Customers",
+  pageTitle: "Transactions",
   search: {
     error: false,
     searchAccounts: [],
