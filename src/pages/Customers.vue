@@ -4,6 +4,7 @@
     <keep-alive>
       <component :is="getHome" />
     </keep-alive>
+    <app-add-account />
     <q-page-sticky
       v-if="getHome == 'app-account'"
       position="bottom-right"
@@ -18,11 +19,13 @@
 import { mapGetters } from "vuex";
 import Account from "../components/Account";
 import SearchDisplay from "../components/SearchDisplay";
+import AddAccount from "../components/AddAccount";
 export default {
   name: "Customers",
   components: {
     appAccount: Account,
-    appSearchDisplay: SearchDisplay
+    appSearchDisplay: SearchDisplay,
+    appAddAccount: AddAccount
   },
   computed: {
     ...mapGetters(["getHome"])

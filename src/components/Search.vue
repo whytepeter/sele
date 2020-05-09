@@ -1,11 +1,10 @@
 <template>
-  <div class="row" :class="{ 'q-mx-xl q-mt-md': $q.screen.gt.xs }">
+  <div class="row " :class="{ 'q-mx-xl q-mt-md': $q.screen.gt.xs }">
     <q-input
       @keyup="toggleSearch(text)"
       @keypress.enter="searchFuntion"
-      class="col q-mx-sm bg-white"
+      class="col q-mx-sm bg-white rounded-borders q-px-xs"
       color="white"
-      filled
       dense
       v-model="text"
       placeholder="Search by name"
