@@ -1,25 +1,33 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <q-btn
-      label="Bottom"
-      icon="keyboard_arrow_down"
-      color="primary"
-      @click="open('bottom')"
-    />
-
     <q-dialog v-model="dialog" :persistent="persistent">
       <q-card style="width: 400px" class="q-pb-sm">
+        <q-linear-progress :value="100" color="primary" />
         <q-card-section class="row justify-center items-center q-pb-none">
           <div class="text-h6 ">Add New Account</div>
           <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
+          <q-btn
+            icon="close"
+            flat
+            round
+            dense
+            v-close-popup
+            @click="close(false)"
+          />
         </q-card-section>
 
-        <q-card-section>
-          <div class="q-pa-md" style="max-width: 300px">
-            <div class="q-gutter-md">
+        <q-card-section column>
+          <div class="q-pa-sm row justify-between bg-grey-2 rounded-borders">
+            <div class="col-4 col-sm-3">
+              <img
+                :src="'statics/banks/' + account.bank + '.png'"
+                :alt="account.bank"
+                style="width: 80px; height: 50px; border: 1px solid #dddd"
+                class="rounded-borders"
+              />
+            </div>
+            <div class="q-gutter-md col-8 col-sm-9">
               <q-select
-                filled
                 v-model="account.bank"
                 :options="options"
                 label="Select bank"
@@ -28,22 +36,18 @@
           </div>
         </q-card-section>
         <q-card-section>
+          <q-input outlined v-model="account.accName" label="Account Name" />
+        </q-card-section>
+        <q-card-section>
           <q-input
-            outline
-            v-model="account.accName"
-            label="Account Name"
-            :dense="dense"
-          />
-          <q-space /><br />
-          <q-input
-            outline
+            outlined
             v-model="account.accNumber"
             label="Account Number"
-            :dense="dense"
           />
         </q-card-section>
-        <q-card-actions class="">
+        <q-card-actions class="q-px-md">
           <q-btn
+            type="submit"
             unelevated
             :loading="loading"
             @click="simulateProgress"
@@ -57,22 +61,31 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
       loading: false,
       persistent: true,
-      dialog: false,
-      position: "center",
+
       options: [
-        {
-          label: "Access",
-          value: "access"
-        },
-        {
-          label: "GTB",
-          value: "gtb"
-        }
+        "Access",
+        "Diamond",
+        "Eco",
+        "First",
+        "Fidelity",
+        "FCMB",
+        "GTB",
+        "Heritage",
+        "Keystone",
+        "Opay",
+        "Polaris",
+        "Stanbic",
+        "Sterling",
+        "UBA",
+        "Unity",
+        "WEMA",
+        "Zenith"
       ],
       account: {
         bank: "default",
@@ -83,11 +96,7 @@ export default {
   },
 
   methods: {
-    open(position) {
-      this.position = position;
-      this.dialog = true;
-    },
-
+    ...mapMutations({ close: "toggleDialogAdd" }),
     //Loader
     simulateProgress() {
       // we set loading state
@@ -98,6 +107,10 @@ export default {
         this.loading = false;
       }, 3000);
     }
+  },
+  computed: {
+    ...mapGetters({ dialog: "getDialogAdd" })
   }
 };
 </script>
+<style lang="scss" scoped></style>

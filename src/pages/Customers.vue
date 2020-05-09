@@ -4,31 +4,57 @@
     <keep-alive>
       <component :is="getHome" />
     </keep-alive>
-    <app-add-account />
+    <keep-alive>
+      <component :is="modal" />
+    </keep-alive>
     <q-page-sticky
       v-if="getHome == 'app-account'"
       position="bottom-right"
       :offset="[18, 18]"
     >
-      <q-btn fab icon="add" color="primary" />
+      <q-btn fab icon="add" color="primary" @click="open(true)" />
     </q-page-sticky>
   </q-page>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import Account from "../components/Account";
 import SearchDisplay from "../components/SearchDisplay";
-import AddAccount from "../components/AddAccount";
+import AddAccountMobile from "../components/AddAccountMobile";
+import AddAccountWeb from "../components/AddAccountWeb";
 export default {
   name: "Customers",
+
   components: {
     appAccount: Account,
     appSearchDisplay: SearchDisplay,
-    appAddAccount: AddAccount
+    appAddAccountMobile: AddAccountMobile,
+    appAddAccountWeb: AddAccountWeb
+  },
+  data: () => ({
+    dialog: false,
+    modal: "app-add-account-mobile"
+  }),
+  methods: {
+    ...mapMutations({ open: "toggleDialogAdd" }),
+
+    detectPlatform() {
+      if (this.$q.platform.is.cordova) {
+        this.modal = "app-add-account-mobile";
+        console.log("mobile");
+      } else if (this.$q.platform.is.desktop) {
+        this.modal = "app-add-account-web";
+        console.log("web");
+      }
+    }
   },
   computed: {
     ...mapGetters(["getHome"])
+  },
+
+  created() {
+    this.detectPlatform();
   }
 };
 </script>

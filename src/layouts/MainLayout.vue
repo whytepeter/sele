@@ -43,7 +43,7 @@
             @click="changePageTitle('Transactions')"
           >
             <q-item-section avatar>
-              <q-icon name="info" />
+              <q-icon name="mdi-finance" />
             </q-item-section>
             <q-item-section>Transactions</q-item-section>
           </q-item>
@@ -56,7 +56,7 @@
             @click="changePageTitle('Customers')"
           >
             <q-item-section avatar>
-              <q-icon name="note" />
+              <q-icon name="mdi-account-box" />
             </q-item-section>
             <q-item-section>Customers</q-item-section>
           </q-item>
@@ -85,7 +85,7 @@
           </q-item>
           <q-item to="/policy" clickable v-ripple exact>
             <q-item-section avatar>
-              <q-icon name="info" />
+              <q-icon name="mdi-file-document" />
             </q-item-section>
             <q-item-section>Terms and Policy</q-item-section>
           </q-item>

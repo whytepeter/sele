@@ -42,7 +42,15 @@
 
           <q-item-section top side>
             <div class="text-grey-8 q-gutter-xs">
-              <q-btn class="gt-xs" size="12px" flat dense round icon="edit" />
+              <q-btn
+                @click="open(index)"
+                class="gt-xs"
+                size="12px"
+                flat
+                dense
+                round
+                icon="edit"
+              />
               <q-btn
                 @click="deleteAccount(index)"
                 class="gt-xs"
@@ -52,6 +60,7 @@
                 round
                 icon="delete"
               />
+
               <q-btn
                 class="lt-sm q-mr-none"
                 size="12px"
@@ -65,7 +74,7 @@
                     style="min-width: 100px text-grey-8 text-weight-medium"
                   >
                     <q-item clickable v-close-popup>
-                      <q-item-section>Edit</q-item-section>
+                      <q-item-section @click="open(index)">Edit</q-item-section>
                     </q-item>
 
                     <q-item clickable v-close-popup>
@@ -82,16 +91,43 @@
         <q-separator inset="item" />
       </q-list>
     </transition-group>
+    <keep-alive>
+      <component
+        :is="modal"
+        :dialog="dialog"
+        :account="account"
+        @close="dialog = $event"
+      />
+    </keep-alive>
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from "vuex";
+import UpdateAccountMobile from "../components/UpdateAccountMobile";
+import UpdateAccountWeb from "../components/UpdateAccountWeb";
 export default {
   props: ["accounts"],
-
+  components: {
+    appUpdateAccountMobile: UpdateAccountMobile,
+    appUpdateAccountWeb: UpdateAccountWeb
+  },
   data: () => ({
+    account: {},
+    modal: "app-update-account-mobile",
     confirm: false
   }),
+  computed: {
+    ...mapGetters({ dialog: "getDialogUpdate" })
+  },
   methods: {
+    ...mapMutations({ openDialog: "toggleDialogUpdate" }),
+
+    open(index) {
+      this.openDialog(true);
+      this.account = this.accounts[index];
+      console.log(this.dialog);
+    },
+
     deleteAccount(index) {
       this.$q
         .dialog({
@@ -110,7 +146,19 @@ export default {
             });
           }, 1500);
         });
+    },
+    detectPlatform() {
+      if (this.$q.platform.is.cordova) {
+        this.modal = "app-update-account-mobile";
+        console.log(this.modal);
+      } else if (this.$q.platform.is.desktop) {
+        this.modal = "app-update-account-web";
+        console.log(this.modal);
+      }
     }
+  },
+  created() {
+    this.detectPlatform();
   }
 };
 </script>

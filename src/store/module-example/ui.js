@@ -1,6 +1,8 @@
 const state = {
   showHome: "app-account",
   pageTitle: "Transactions",
+  dialogUpdate: false,
+  dialogAdd: false,
   search: {
     error: false,
     searchAccounts: [],
@@ -16,6 +18,14 @@ const getters = {
     return state.pageTitle;
   },
 
+  //get Dialog for form
+
+  getDialogAdd() {
+    return state.dialogAdd;
+  },
+  getDialogUpdate() {
+    return state.dialogUpdate;
+  },
   //Search Getters
   getSearchInput(state) {
     return state.search.text;
@@ -29,6 +39,14 @@ const getters = {
 };
 
 const mutations = {
+  //set dialog
+  toggleDialogAdd(state, mode) {
+    state.dialogAdd = mode;
+  },
+  toggleDialogUpdate(state, mode) {
+    state.dialogUpdate = mode;
+  },
+
   //Search Mutations
   toggleSearch(state, text) {
     if (!text.length) {
