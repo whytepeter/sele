@@ -33,7 +33,6 @@ export default {
     appAddAccountWeb: AddAccountWeb
   },
   data: () => ({
-    dialog: false,
     modal: "app-add-account-mobile"
   }),
   methods: {

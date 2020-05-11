@@ -113,4 +113,8 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.q-card {
+  border-radius: 20px 20px 0 0;
+}
+</style>

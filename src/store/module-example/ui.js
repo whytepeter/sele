@@ -3,6 +3,8 @@ const state = {
   pageTitle: "Transactions",
   dialogUpdate: false,
   dialogAdd: false,
+  dialogTransaction: false,
+
   search: {
     error: false,
     searchAccounts: [],
@@ -26,6 +28,10 @@ const getters = {
   getDialogUpdate() {
     return state.dialogUpdate;
   },
+  getDialogTransaction() {
+    return state.dialogTransaction;
+  },
+
   //Search Getters
   getSearchInput(state) {
     return state.search.text;
@@ -45,6 +51,9 @@ const mutations = {
   },
   toggleDialogUpdate(state, mode) {
     state.dialogUpdate = mode;
+  },
+  toggleDialogTransaction(state, mode) {
+    state.dialogTransaction = mode;
   },
 
   //Search Mutations

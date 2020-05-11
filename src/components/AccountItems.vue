@@ -92,12 +92,7 @@
       </q-list>
     </transition-group>
     <keep-alive>
-      <component
-        :is="modal"
-        :dialog="dialog"
-        :account="account"
-        @close="dialog = $event"
-      />
+      <component :is="modal" :account="account" />
     </keep-alive>
   </div>
 </template>
@@ -125,7 +120,6 @@ export default {
     open(index) {
       this.openDialog(true);
       this.account = this.accounts[index];
-      console.log(this.dialog);
     },
 
     deleteAccount(index) {
@@ -140,8 +134,7 @@ export default {
           this.accounts.splice(index, 1);
           setTimeout(() => {
             this.$q.notify({
-              type: "positive",
-              color: "secondary",
+              color: "primary",
               message: `Account deleted`
             });
           }, 1500);

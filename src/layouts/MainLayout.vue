@@ -36,7 +36,7 @@
       >
         <q-list padding class="text-grey-8">
           <q-item
-            to="/transactions"
+            to="/"
             clickable
             v-ripple
             exact
@@ -61,14 +61,26 @@
             <q-item-section>Customers</q-item-section>
           </q-item>
 
-          <q-item to="/share" clickable v-ripple exact>
+          <q-item
+            to="/share"
+            clickable
+            v-ripple
+            exact
+            @click="changePageTitle('Share App')"
+          >
             <q-item-section avatar>
               <q-icon name="share" />
             </q-item-section>
             <q-item-section>Share App</q-item-section>
           </q-item>
 
-          <q-item to="/updates" clickable v-ripple exact>
+          <q-item
+            to="/updates"
+            clickable
+            v-ripple
+            exact
+            @click="changePageTitle('Update')"
+          >
             <q-item-section avatar>
               <q-icon name="update" />
             </q-item-section>
@@ -77,19 +89,31 @@
 
           <q-separator />
 
-          <q-item to="/feedback" clickable v-ripple exact>
+          <q-item
+            to="/feedback"
+            clickable
+            v-ripple
+            exact
+            @click="changePageTitle('Feedback')"
+          >
             <q-item-section avatar>
               <q-icon name="feedback" />
             </q-item-section>
             <q-item-section>Feedback</q-item-section>
           </q-item>
-          <q-item to="/policy" clickable v-ripple exact>
+          <q-item
+            to="/policy"
+            clickable
+            v-ripple
+            exact
+            @click="changePageTitle('Terms and Policy')"
+          >
             <q-item-section avatar>
               <q-icon name="mdi-file-document" />
             </q-item-section>
             <q-item-section>Terms and Policy</q-item-section>
           </q-item>
-          <q-item to="/welcome" clickable v-ripple exact @click="logout">
+          <q-item to="/welcome" clickable v-ripple exact @click="logoutUser">
             <q-item-section avatar>
               <q-icon name="logout" />
             </q-item-section>
@@ -141,7 +165,12 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(["changePageTitle", "logout"])
+    ...mapMutations(["changePageTitle", "logout"]),
+
+    logoutUser() {
+      this.logout();
+      this.changePageTitle("Customers");
+    }
   },
   created() {
     this.$store.dispatch("initAccounts");
