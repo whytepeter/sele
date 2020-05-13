@@ -9,6 +9,10 @@ const state = {
     error: false,
     searchAccounts: [],
     text: ""
+  },
+
+  welcome: {
+    show: "app-create-account"
   }
 };
 
@@ -41,6 +45,11 @@ const getters = {
   },
   getSearch(state) {
     return state.search.searchAccounts;
+  },
+
+  //getters for welcome page
+  getShow(state) {
+    return state.welcome.show;
   }
 };
 
@@ -83,6 +92,10 @@ const mutations = {
   },
   changePageTitle(state, title) {
     state.pageTitle = title;
+  },
+  //Mutations for welcome
+  changeShow(state, page) {
+    state.welcome.show = page;
   }
 };
 

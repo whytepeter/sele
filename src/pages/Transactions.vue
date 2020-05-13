@@ -34,13 +34,13 @@
                 class="q-mr-xs q-pb-xs"
               />
               <span class="text-h5 text-weight-bold">{{
-                board.gain | currency
+                gain | currency
               }}</span>
             </div>
           </div>
           <div class="col-4 no-wrap">
             <span class="text-grey-2 text-caption text-weight-medium">
-              Savings
+              Total Savings
             </span>
             <div class="row no-wrap items-center">
               <q-icon
@@ -49,7 +49,7 @@
                 class="q-mr-xs q-pb-xs"
               />
               <span class="text-h6 text-weight-bold">{{
-                board.savings | currency
+                savings | currency
               }}</span>
             </div>
           </div>
@@ -68,7 +68,7 @@
                 class="q-mr-xs q-pb-xs"
               />
               <span class="text-subtitle2 text-weight-bold"
-                >{{ board.expenses | currency }}
+                >{{ expenses | currency }}
               </span>
             </div>
           </div>
@@ -135,10 +135,13 @@
       <q-separator inset="item" />
     </q-list>
     <keep-alive>
-      <component :is="modal" :transaction="transaction" />
+      <component :is="modalView" :transaction="transaction" />
+    </keep-alive>
+    <keep-alive>
+      <component :is="modalAdd" />
     </keep-alive>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" />
+      <q-btn fab icon="add" color="primary" @click="openAddTransaction(true)" />
     </q-page-sticky>
   </q-page>
 </template>
@@ -147,57 +150,34 @@
 import { mapGetters, mapMutations } from "vuex";
 import ViewTransactionMobile from "../components/ViewTransactionMobile";
 import ViewTransactionWeb from "../components/ViewTransactionWeb";
+import AddTransactionWeb from "../components/AddTransactionWeb";
+import AddTransactionMobile from "../components/AddTransactionMobile";
 export default {
   name: "Transactions",
   components: {
     appViewTransactionMobile: ViewTransactionMobile,
-    appViewTransactionWeb: ViewTransactionWeb
+    appViewTransactionWeb: ViewTransactionWeb,
+    appAddTransactionWeb: AddTransactionWeb,
+    appAddTransactionMobile: AddTransactionMobile
   },
   data: () => ({
-    modal: "app-view-transaction-mobile",
+    modalView: "app-view-transaction-mobile",
+    modalAdd: "app-add-transaction-web",
     hide: "Hide",
     show: true,
     showIcon: "mdi-eye",
-    board: {
-      gain: 50500,
-      savings: 19000,
-      expenses: -20500
-    },
     transaction: {},
-    transactions: [
-      {
-        id: 1,
-        date: "May, 6, 2020",
-        dailyGain: 7600,
-        dailyExpenses: 1500,
-        dailySavings: 1000
-      },
-      {
-        id: 2,
-        date: "May, 7, 2020",
-        dailyGain: 12000,
-        dailyExpenses: 4700,
-        dailySavings: 1000
-      },
-      {
-        id: 3,
-        date: "May, 8, 2020",
-        dailyGain: 5500,
-        dailyExpenses: 3000,
-        dailySavings: 1000
-      },
-      {
-        id: 4,
-        date: "May, 9, 2020",
-        dailyGain: 4000,
-        dailyExpenses: 2000,
-        dailySavings: 1000
-      }
-    ]
+    gain: 0,
+    savings: 0,
+    expenses: 0
   }),
 
   methods: {
-    ...mapMutations({ openDialog: "toggleDialogTransaction" }),
+    ...mapMutations({
+      openDialog: "toggleDialogTransaction",
+      openAddTransaction: "toggleTransactionAdd",
+      sumTransations: "sumTransactions"
+    }),
 
     open(index) {
       this.openDialog(true);
@@ -209,29 +189,56 @@ export default {
         this.show = false;
         this.showIcon = "mdi-eye-off";
         this.hide = "Show";
+
+        this.gain = "*****";
+        this.savings = "*****";
+        this.expenses = "*****";
       } else if (this.show === false) {
         this.show = true;
         this.showIcon = "mdi-eye";
         this.hide = "Hide";
+
+        this.gain = this.summary.totalGain;
+        this.savings = this.summary.totalSavings;
+        this.expenses = this.summary.totalExpenses;
       }
     },
 
     detectPlatform() {
       if (this.$q.platform.is.cordova) {
-        this.modal = "app-view-transaction-mobile";
+        this.modalView = "app-view-transaction-mobile";
+        this.modalAdd = "app-add-transaction-mobile";
       } else if (this.$q.platform.is.desktop) {
-        this.modal = "app-view-transaction-web";
+        this.modalView = "app-view-transaction-web";
+        this.modalAdd = "app-add-transaction-web";
       }
     }
   },
-
+  computed: {
+    ...mapGetters({
+      transactions: "getTransactions",
+      summary: "getTransactionSumary"
+    })
+  },
   filters: {
     currency(value) {
       return value.toLocaleString();
     }
+
+    // visible(value) {
+    //   if (this.show === true) {
+    //     return (value = "******");
+    //   } else if (this.show === false) {
+    //     return (value = value);
+    //   }
+    // }
   },
   created() {
     this.detectPlatform();
+    this.sumTransations();
+    this.gain = this.summary.totalGain;
+    this.savings = this.summary.totalSavings;
+    this.expenses = this.summary.totalExpenses;
   }
 };
 </script>

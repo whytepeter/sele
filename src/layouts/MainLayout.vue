@@ -169,11 +169,12 @@ export default {
 
     logoutUser() {
       this.logout();
-      this.changePageTitle("Customers");
+      this.changePageTitle("Welcome");
     }
   },
   created() {
     this.$store.dispatch("initAccounts");
+    this.$store.dispatch("initTransactions");
   }
 };
 </script>

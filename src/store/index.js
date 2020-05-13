@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import ui from "./module-example/ui";
+import transactions from "./module-example/transactions";
 import authentication from "./module-example/authentication";
 
 // import example from './module-example'
@@ -20,7 +21,8 @@ export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       ui,
-      authentication
+      authentication,
+      transactions
     },
 
     // enable strict mode (adds overhead!)

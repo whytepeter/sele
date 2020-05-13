@@ -186,7 +186,7 @@
           >
           <div class="reciept-img">
             <q-img
-              :src="url"
+              :src="transaction.reciept"
               spinner-color="white"
               class="img"
               @click="viewImg = true"
@@ -213,7 +213,7 @@
         <q-card-section class="viewCard--section-2 ">
           <div class="col viewImg">
             <q-img
-              :src="url"
+              :src="transaction.reciept"
               contain
               spinner-color="white"
               class="rounded-borders"
@@ -234,7 +234,6 @@ export default {
   data() {
     return {
       viewImg: false,
-      url: "https://picsum.photos/200",
       loading: false
     };
   },
@@ -286,7 +285,6 @@ export default {
   width: 700px;
   max-width: 80vw;
   height: 90vh;
-  
 
   &--section-2 {
     width: 100%;

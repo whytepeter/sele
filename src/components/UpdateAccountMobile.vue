@@ -104,9 +104,7 @@ export default {
         // we're done, we reset loading state
         this.loading = false;
       }, 3000);
-    },
-
-    close() {}
+    }
   },
   computed: {
     ...mapGetters({ dialog: "getDialogUpdate" })
