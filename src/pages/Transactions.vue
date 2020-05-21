@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-px-md q-py-sm" :class="{ 'q-px-xl': $q.screen.gt.xs }">
+  <q-page class="q-px-md q-py-sm " :class="{ 'q-px-xl': $q.screen.gt.xs }">
     <q-card flat class="my-card overflow-hidden q-mb-md">
       <q-card-section
         class=" my-card-transaction bg-primary text-white relative-position q-px-xs"
@@ -16,6 +16,8 @@
               <div class="text-caption text-grey2 q-mr-sm">{{ hide }}</div>
               <q-icon size="xs" right :name="showIcon" />
             </q-btn>
+
+            <q-separator vertical />
           </div>
           <q-btn rounded flat icon="mdi-chart-bar" />
         </q-card-section>
@@ -33,8 +35,11 @@
                 name="img:statics/naira.svg"
                 class="q-mr-xs q-pb-xs"
               />
-              <span class="text-h5 text-weight-bold">{{
-                gain | currency
+              <span v-if="show" class="text-h5 text-weight-bold">{{
+                summary.totalGain | currency
+              }}</span>
+              <span v-else class="text-h5 text-weight-bold">{{
+                summary.totalGain | currency | hideValue
               }}</span>
             </div>
           </div>
@@ -48,8 +53,11 @@
                 name="img:statics/naira.svg"
                 class="q-mr-xs q-pb-xs"
               />
-              <span class="text-h6 text-weight-bold">{{
-                savings | currency
+              <span v-if="show" class="text-h6 text-weight-bold">{{
+                summary.totalSavings | currency
+              }}</span>
+              <span v-else class="text-h6 text-weight-bold">{{
+                summary.totalSavings | currency | hideValue
               }}</span>
             </div>
           </div>
@@ -67,14 +75,33 @@
                 name="img:statics/naira.svg"
                 class="q-mr-xs q-pb-xs"
               />
-              <span class="text-subtitle2 text-weight-bold"
-                >{{ expenses | currency }}
+              <span v-if="show" class="text-subtitle2 text-weight-bold"
+                >{{ summary.totalExpenses | currency }}
+              </span>
+              <span v-else class="text-subtitle2 text-weight-bold"
+                >{{ summary.totalExpenses | currency | hideValue }}
               </span>
             </div>
           </div>
         </q-card-section>
       </q-card-section>
     </q-card>
+
+    <!-- Show if theres no Transaction -->
+    <transition
+      enter-active-class="animated fadeIn delay-1s"
+      leave-active-class="animated fadeOut "
+      mode="out-in"
+    >
+      <div
+        v-if="!transactions.length"
+        class="text-grey-5 col text-center q-mt-md absolute-center"
+      >
+        <q-icon style="font-size: 5em;" name="mdi-finance" />
+
+        <div class="text-h6">No Account</div>
+      </div>
+    </transition>
     <!-- 
      The Transactions Items 
    -->
@@ -93,7 +120,7 @@
         class="accountItem  bg items-center justify-between"
       >
         <q-item-section avatar>
-          <q-icon size="xl" name="img:statics/pos.svg" />
+          <q-icon size="lg" name="img:statics/pos.svg" />
         </q-item-section>
 
         <q-item-section>
@@ -166,10 +193,7 @@ export default {
     hide: "Hide",
     show: true,
     showIcon: "mdi-eye",
-    transaction: {},
-    gain: 0,
-    savings: 0,
-    expenses: 0
+    transaction: {}
   }),
 
   methods: {
@@ -187,20 +211,12 @@ export default {
     hideBal() {
       if (this.show === true) {
         this.show = false;
+        this.hide = "show";
         this.showIcon = "mdi-eye-off";
-        this.hide = "Show";
-
-        this.gain = "*****";
-        this.savings = "*****";
-        this.expenses = "*****";
       } else if (this.show === false) {
         this.show = true;
+        this.hide = "hide";
         this.showIcon = "mdi-eye";
-        this.hide = "Hide";
-
-        this.gain = this.summary.totalGain;
-        this.savings = this.summary.totalSavings;
-        this.expenses = this.summary.totalExpenses;
       }
     },
 
@@ -223,22 +239,14 @@ export default {
   filters: {
     currency(value) {
       return value.toLocaleString();
-    }
+    },
 
-    // visible(value) {
-    //   if (this.show === true) {
-    //     return (value = "******");
-    //   } else if (this.show === false) {
-    //     return (value = value);
-    //   }
-    // }
+    hideValue(value) {
+      return (value = "*****");
+    }
   },
   created() {
     this.detectPlatform();
-    this.sumTransations();
-    this.gain = this.summary.totalGain;
-    this.savings = this.summary.totalSavings;
-    this.expenses = this.summary.totalExpenses;
   }
 };
 </script>

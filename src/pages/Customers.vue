@@ -1,5 +1,16 @@
 <template>
-  <q-page class="q-px-md q-py-sm" :class="{ 'q-px-xl': $q.screen.gt.xs }">
+  <q-page
+    class=" q-px-md q-py-xl relative"
+    :class="{ 'q-px-xl': $q.screen.gt.xs }"
+    style="padding-top: 4.5rem"
+  >
+    <q-toolbar
+      class=" search bg-primary q-py-md absolute"
+      :class="{ 'q-px-xl': $q.screen.gt.xs }"
+    >
+      <app-search class="full-width" />
+    </q-toolbar>
+
     <q-space />
     <keep-alive>
       <component :is="getHome" />
@@ -19,6 +30,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import Search from "../components/Search";
 import Account from "../components/Account";
 import SearchDisplay from "../components/SearchDisplay";
 import AddAccountMobile from "../components/AddAccountMobile";
@@ -28,6 +40,7 @@ export default {
 
   components: {
     appAccount: Account,
+    appSearch: Search,
     appSearchDisplay: SearchDisplay,
     appAddAccountMobile: AddAccountMobile,
     appAddAccountWeb: AddAccountWeb
@@ -57,3 +70,16 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.search {
+  top: 0;
+  left: 0;
+  z-index: 3;
+
+  @media (min-width: 700px) {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+</style>

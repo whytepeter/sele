@@ -2,7 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 import ui from "./module-example/ui";
 import transactions from "./module-example/transactions";
+import customers from "./module-example/customers";
 import authentication from "./module-example/authentication";
+import feedback from "./module-example/feedback";
 
 // import example from './module-example'
 
@@ -22,7 +24,9 @@ export default function(/* { ssrContext } */) {
     modules: {
       ui,
       authentication,
-      transactions
+      transactions,
+      customers,
+      feedback
     },
 
     // enable strict mode (adds overhead!)

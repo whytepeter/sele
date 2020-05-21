@@ -13,10 +13,12 @@
       </q-card-section>
 
       <q-card-section class="q-pb-xs">
-        <div class=" text-left text-h5 text-weight-bold q-mb-md">
+        <div class=" text-left text-h6 text-weight-bold q-mb-md">
           Reset Password
         </div>
-
+        <div v-if="loading === true" class="fixed-top">
+          <q-linear-progress indeterminate />
+        </div>
         <q-input
           type="email"
           dense
@@ -24,16 +26,18 @@
           v-model="user.email"
           placeholder="Email Address"
           class="q-mb-md text-subtitle1"
-        />
+          ><template v-slot:prepend>
+            <q-icon name="email" color="primary" />
+          </template>
+        </q-input>
       </q-card-section>
-
+      <p class="text-caption text-red q-px-ms q-mb-xs">{{ error }}</p>
       <q-card-actions class="q-pt-none q-px-md">
         <q-btn
           flat
           label="Reset Password"
           class="bg-primary full-width text-grey-1 "
-          :loading="loading"
-          @click="simulateProgress"
+          @click="passwordReset(user)"
         />
       </q-card-actions>
       <q-card-section class="text-center q-py-xs">
@@ -44,17 +48,7 @@
             flat
             class="text-secondary q-pa-none"
             label="Login"
-            @click="changeShow('app-login')"
-          />
-        </div>
-        <div class=" text-grey-8 text-captionsubtitle2">
-          New to <strong>SELE</strong>?
-          <q-btn
-            no-caps
-            flat
-            class="text-secondary q-pa-none"
-            label="Sign up"
-            @click="changeShow('app-create-account')"
+            @click="switchTo('app-login')"
           />
         </div>
       </q-card-section>
@@ -62,28 +56,27 @@
   </q-card>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions, mapGetters } from "vuex";
 export default {
   data: () => ({
     loading: false,
     user: {
-      email: "",
-      password: ""
+      email: ""
     }
   }),
   methods: {
-    ...mapMutations({ changeShow: "changeShow" }),
+    ...mapMutations({ changeShow: "changeShow", setError: "setError" }),
+    ...mapActions(["passwordReset"]),
 
-    //Loader
-    simulateProgress() {
-      // we set loading state
-      this.loading = true;
-      // simulate a delay
-      setTimeout(() => {
-        // we're done, we reset loading state
-        this.loading = false;
-      }, 3000);
+    switchTo(to) {
+      this.setError(null);
+      this.changeShow(to);
+      //reset form
+      this.user.email = "";
     }
+  },
+  computed: {
+    ...mapGetters({ error: "getAuthError", loading: "getLoading" })
   }
 };
 </script>

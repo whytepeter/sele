@@ -15,14 +15,6 @@
           <div class="q-ml-sm">{{ pageTitle }}</div>
         </q-toolbar-title>
       </q-toolbar>
-
-      <div
-        v-if="pageTitle === 'Customers'"
-        :class="{ 'q-mx-xl ': $q.screen.gt.xs }"
-        class="q-mt-lg q-mb-md"
-      >
-        <app-search />
-      </div>
     </q-header>
     <q-drawer
       v-if="isLogin"
@@ -61,6 +53,20 @@
             <q-item-section>Customers</q-item-section>
           </q-item>
 
+          <!-- UPCOMING FEATURE
+          <q-item
+            to="/community"
+            clickable
+            v-ripple
+            exact
+            @click="changePageTitle('Community')"
+          >
+            <q-item-section avatar>
+              <q-icon name="mdi-account-group" />
+            </q-item-section>
+            <q-item-section>Community</q-item-section>
+          </q-item> 
+
           <q-item
             to="/share"
             clickable
@@ -85,9 +91,7 @@
               <q-icon name="update" />
             </q-item-section>
             <q-item-section>Updates</q-item-section>
-          </q-item>
-
-          <q-separator />
+          </q-item> -->
 
           <q-item
             to="/feedback"
@@ -101,6 +105,8 @@
             </q-item-section>
             <q-item-section>Feedback</q-item-section>
           </q-item>
+
+          <q-separator />
           <q-item
             to="/policy"
             clickable
@@ -113,7 +119,8 @@
             </q-item-section>
             <q-item-section>Terms and Policy</q-item-section>
           </q-item>
-          <q-item to="/welcome" clickable v-ripple exact @click="logoutUser">
+
+          <q-item to="/welcome" clickable v-ripple exact @click="logout">
             <q-item-section avatar>
               <q-icon name="logout" />
             </q-item-section>
@@ -125,10 +132,11 @@
       <div class="absolute-top bg-grey-2 " style="height: 150px">
         <div class="absolute-bottom bg-transparent ellipse q-px-lg q-pb-md">
           <q-avatar size="56px" class="q-mb-sm">
-            <img :src="user.profilePhoto" />
+            <!-- <img :src="user.profilePhoto" /> -->
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
           </q-avatar>
           <div class="text-subtitle1 text-weight-bold text-grey-9">
-            {{ user.name }}
+            {{ user.username }}
           </div>
           <div class="text-grey-8">{{ user.email }}</div>
         </div>
@@ -143,13 +151,11 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import Search from "../components/Search";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+
 export default {
   name: "MainLayout",
-  components: {
-    appSearch: Search
-  },
+
   data() {
     return {
       showHeader: true,
@@ -165,16 +171,17 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(["changePageTitle", "logout"]),
+    ...mapMutations(["changePageTitle", "changeShow"]),
+    ...mapActions(["logoutUser"]),
 
-    logoutUser() {
-      this.logout();
+    logout() {
+      this.changeShow("app-login");
+      this.logoutUser();
       this.changePageTitle("Welcome");
     }
   },
   created() {
-    this.$store.dispatch("initAccounts");
-    this.$store.dispatch("initTransactions");
+    this.$store.dispatch("handleAuthStateChanged");
   }
 };
 </script>

@@ -26,7 +26,7 @@
                 :class="{
                   'ellipsis text-subtitle1 text-weight-medium ': $q.screen.lt.sm
                 }"
-                class="accountDetails--name capitalize text-grey-9 text-h6 q-mr-md"
+                class="accountDetails--name text-capitalize text-grey-9 text-h6 q-mr-md"
                 >{{ account.accName }}</q-item-label
               >
 
@@ -43,7 +43,7 @@
           <q-item-section top side>
             <div class="text-grey-8 q-gutter-xs">
               <q-btn
-                @click="open(index)"
+                @click="openForm(index)"
                 class="gt-xs"
                 size="12px"
                 flat
@@ -74,7 +74,9 @@
                     style="min-width: 100px text-grey-8 text-weight-medium"
                   >
                     <q-item clickable v-close-popup>
-                      <q-item-section @click="open(index)">Edit</q-item-section>
+                      <q-item-section @click="openForm(index)"
+                        >Edit</q-item-section
+                      >
                     </q-item>
 
                     <q-item clickable v-close-popup>
@@ -97,7 +99,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import UpdateAccountMobile from "../components/UpdateAccountMobile";
 import UpdateAccountWeb from "../components/UpdateAccountWeb";
 export default {
@@ -116,13 +118,16 @@ export default {
   },
   methods: {
     ...mapMutations({ openDialog: "toggleDialogUpdate" }),
+    ...mapActions(["deleteCustomer"]),
 
-    open(index) {
-      this.openDialog(true);
+    //open edith form
+    openForm(index) {
       this.account = this.accounts[index];
+      this.openDialog(true);
     },
-
     deleteAccount(index) {
+      //get id for the deleted account
+      let ID = this.accounts[index].id;
       this.$q
         .dialog({
           title: "Confirm",
@@ -131,6 +136,8 @@ export default {
           persistent: true
         })
         .onOk(() => {
+          this.deleteCustomer(ID);
+
           this.accounts.splice(index, 1);
           setTimeout(() => {
             this.$q.notify({
@@ -140,6 +147,7 @@ export default {
           }, 1500);
         });
     },
+
     detectPlatform() {
       if (this.$q.platform.is.cordova) {
         this.modal = "app-update-account-mobile";
@@ -160,8 +168,8 @@ export default {
 .bankImg {
   border-radius: 5px;
   @media (max-width: 600px) {
-    width: 80px;
-    height: 50px;
+    width: 72px;
+    height: 45px;
     border-radius: 5px;
   }
 }

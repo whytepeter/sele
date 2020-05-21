@@ -1,8 +1,11 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <q-dialog v-model="dialog" :persistent="persistent">
+    <q-dialog v-model="dialog" persistent>
       <q-card style="width: 400px" class="q-pb-sm">
-        <q-linear-progress :value="100" color="primary" />
+        <div v-if="!loading">
+          <q-linear-progress :value="100" color="primary" />
+        </div>
+        <div v-else><q-linear-progress indeterminate /></div>
         <q-card-section class="row justify-center items-center q-pb-none">
           <div class="text-h6 ">Update Account</div>
           <q-space />
@@ -26,7 +29,7 @@
                 class="rounded-borders"
               />
             </div>
-            <div class="q-gutter-md col-8 col-sm-9">
+            <div class=" q-gutter-md col-8 col-sm-9 relative">
               <q-select
                 v-model="account.bank"
                 :options="options"
@@ -36,21 +39,32 @@
           </div>
         </q-card-section>
         <q-card-section>
-          <q-input outlined v-model="account.accName" label="Account Name" />
+          <q-input
+            outlined
+            v-model="account.accName"
+            label="Account Name"
+            lazy-rules
+            :rules="[
+              val => (val && val.length > 0) || 'Please add an acccount Number'
+            ]"
+          />
         </q-card-section>
         <q-card-section>
           <q-input
             outlined
             v-model="account.accNumber"
             label="Account Number"
+            lazy-rules
+            :rules="[
+              val => (val && val.length > 0) || 'Please add an acccount Number'
+            ]"
           />
         </q-card-section>
         <q-card-actions class="q-px-md">
           <q-btn
             type="submit"
             unelevated
-            :loading="loading"
-            @click="simulateProgress"
+            @click="editCustomer"
             color="primary"
             label="Update Account"
             class="full-width"
@@ -61,16 +75,13 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   props: {
     account: Object
   },
   data() {
     return {
-      loading: false,
-      persistent: true,
-
       options: [
         "Access",
         "Diamond",
@@ -95,19 +106,21 @@ export default {
 
   methods: {
     ...mapMutations({ closeForm: "toggleDialogUpdate" }),
-    //Loader
-    simulateProgress() {
-      // we set loading state
-      this.loading = true;
-      // simulate a delay
-      setTimeout(() => {
-        // we're done, we reset loading state
-        this.loading = false;
-      }, 3000);
+    ...mapActions({ update: "editCustomer" }),
+
+    //update the account
+    editCustomer() {
+      if (this.account.bank !== "default") {
+        this.update(this.account);
+        this.closeForm(false);
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   computed: {
-    ...mapGetters({ dialog: "getDialogUpdate" })
+    ...mapGetters({ dialog: "getDialogUpdate", loading: "getLoading" })
   }
 };
 </script>

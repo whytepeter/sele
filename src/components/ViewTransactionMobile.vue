@@ -193,6 +193,17 @@
             />
           </div>
         </q-card-section>
+        <q-card-actions class="q-px-md">
+          <q-btn
+            type="submit"
+            unelevated
+            outline
+            color="negative"
+            label="Delete Transaction"
+            class="full-width q-py-xs"
+            @click="deleteAccount"
+          />
+        </q-card-actions>
       </q-card>
     </q-dialog>
     <!-- Show image in full screen -->
@@ -224,7 +235,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   props: {
     transaction: Object
@@ -237,7 +248,30 @@ export default {
   },
 
   methods: {
-    ...mapMutations({ closeForm: "toggleDialogTransaction" })
+    ...mapMutations({ closeForm: "toggleDialogTransaction" }),
+    ...mapActions(["deleteTransaction"]),
+
+    deleteAccount() {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Are you sure?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          //delete the transaction from the database
+          this.deleteTransaction(this.transaction.id);
+          //close the form
+          this.closeForm();
+          setTimeout(() => {
+            this.$q.notify({
+              color: "primary",
+              message: `Transaction deleted successfully`
+            });
+          }, 700);
+        });
+    }
   },
   computed: {
     ...mapGetters({ dialog: "getDialogTransaction" })
