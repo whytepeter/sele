@@ -67,8 +67,6 @@ const actions = {
     let currentYear = date.getFullYear(); // get current year
     commit("setMonth", currentMonth);
     commit("setYear", currentYear);
-    console.log(state.currentMonth);
-    console.log(state.currentYear);
   },
 
   //refresh Transactions
@@ -183,7 +181,6 @@ const actions = {
             dailyExpenses: parseInt(doc.data().dailyExpenses)
           };
           transactions.push(transaction);
-          console.log(`reciept/${transaction.id}.jpg`);
         });
         //get the reciept
         transactions.forEach(trans => {
@@ -191,7 +188,6 @@ const actions = {
             .getDownloadURL()
             .then(url => {
               trans.reciept = url;
-              console.log(transactions);
             })
             .catch(error => {
               switch (error.code) {
@@ -218,8 +214,6 @@ const actions = {
         commit("setTransactions", transactions);
         dispatch("setCurrentDate");
         dispatch("sumTransactions");
-
-        console.log(transactions);
       });
   }
 };

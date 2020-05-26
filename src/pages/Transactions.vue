@@ -258,6 +258,7 @@ export default {
 
     detectPlatform() {
       if (this.$q.platform.is.cordova) {
+        console.log("mobile");
         this.modalView = "app-view-transaction-mobile";
         this.modalAdd = "app-add-transaction-mobile";
       } else if (this.$q.platform.is.desktop) {

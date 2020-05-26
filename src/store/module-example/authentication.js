@@ -50,7 +50,6 @@ const actions = {
     auth
       .createUserWithEmailAndPassword(user.email, user.password)
       .then(cred => {
-        console.log(cred.user);
         commit("setLogin", true);
         commit("setError", null);
         commit("setLoading", false);
@@ -65,7 +64,6 @@ const actions = {
           });
       })
       .catch(error => {
-        console.log(error.message);
         commit("setError", error.message);
         commit("setLoading", false);
       });
@@ -82,7 +80,6 @@ const actions = {
         commit("setLoading", false);
       })
       .catch(error => {
-        console.log(error.message);
         commit("setError", error.message);
         commit("setLoading", false);
       });
@@ -110,7 +107,7 @@ const actions = {
     auth.onAuthStateChanged(user => {
       if (user) {
         commit("setLogin", true);
-        console.log("login");
+
         //get current user id
         let userId = auth.currentUser.uid;
 
@@ -122,7 +119,6 @@ const actions = {
             if (snapshot.exists) {
               let currentUser = snapshot.data();
               commit("setUser", currentUser);
-              console.log(currentUser);
             } else {
               // snapshot.data() will be undefined in this case
               console.log("No such document!");
