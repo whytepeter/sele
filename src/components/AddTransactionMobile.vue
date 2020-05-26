@@ -126,10 +126,6 @@ export default {
     ...mapMutations({ close: "toggleTransactionAdd" }),
     ...mapActions(["addTransaction"]),
 
-    getUrl(files) {
-      return `http://localhost:4444/upload?count=${files.length}`;
-    },
-
     //if files is not an image
     onRejected(rejectedEntries) {
       this.$q.notify({
@@ -145,16 +141,21 @@ export default {
       this.transaction.reciept = null;
     },
     addNewTransation() {
-      this.transaction.reciept = null;
+      // this.transaction.reciept = null;
       this.addTransaction(this.transaction);
       //close the form
       this.close(false);
       //clear the fields
       this.resetForm();
+    },
+
+    getUrl(files) {
+      return `http://localhost:4444/upload?count=${files.length}`;
     }
   },
   computed: {
-    ...mapGetters({ open: "getTransactionAdd" }),
+    ...mapGetters({ open: "getTransactionAdd", loading: "getLoading" }),
+
     currentDate() {
       let timeStamp = Date.now();
 

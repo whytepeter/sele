@@ -17,6 +17,11 @@ const mutations = {
 };
 
 const actions = {
+  //refresh customer
+  refreshCustomers({ dispatch }) {
+    dispatch("initCustomers");
+  },
+
   addCustomer({}, account) {
     //get the the current user customer collection
     let customerCol = `customer${auth.currentUser.uid}`;
@@ -85,9 +90,7 @@ const actions = {
       });
 
       commit("setAccounts", accounts);
-
     });
-
   }
 };
 

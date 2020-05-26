@@ -265,7 +265,7 @@ export default {
         })
         .onOk(() => {
           //delete the transaction from the database
-          this.deleteTransaction(this.transaction.id);
+          this.deleteTransaction(this.transaction);
           //close the form
           this.closeForm();
           setTimeout(() => {

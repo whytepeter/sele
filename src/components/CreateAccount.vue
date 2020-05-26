@@ -11,7 +11,7 @@
       <q-card-section class="text-center row justify-center">
         <div class="row items-center ">
           <q-icon size="3rem" name="img:statics/sele-logo.svg" class="naira" />
-          <div class="q-ml-sm text-h4">Sele</div>
+          <div class="q-ml-sm text-h4">esele</div>
         </div>
       </q-card-section>
       <form>
@@ -71,12 +71,13 @@
           <q-card-section
             class="Policy q-pa-none text-center text-grey-8 text-caption no-whitespace"
           >
-            By creating an account, you agree to <strong>SELE</strong>
+            By creating an account, you agree to <strong>ESELE</strong>
             <q-btn
               no-caps
               flat
               class="text-secondary q-pa-none"
               label="Terms & Privacy Policy"
+              @click="terms = true"
             />
           </q-card-section>
         </q-card-section>
@@ -103,12 +104,33 @@
         </q-card-section>
       </form>
     </q-card-section>
+
+    <q-dialog v-model="terms">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Esele Terms and Privacy Policies</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <app-terms />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="ACCEPT" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 <script>
 import { mapMutations, mapActions, mapGetters } from "vuex";
+import Terms from "./TermsAndPolicy";
 export default {
+  components: {
+    appTerms: Terms
+  },
   data: () => ({
+    terms: false,
     showPassword: false,
     type: "password",
     passwordIcon: "mdi-eye-off",

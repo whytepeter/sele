@@ -131,7 +131,7 @@ export default {
       this.transaction.reciept = null;
     },
     addNewTransation() {
-      this.transaction.reciept = null;
+      // this.transaction.reciept = null;
       this.addTransaction(this.transaction);
       //close the form
       this.close(false);

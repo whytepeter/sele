@@ -1,9 +1,9 @@
 {
-  "name": "wsearch",
+  "name": "esele",
   "version": "0.0.1",
-  "description": "A POS account search app",
-  "productName": "wsearch",
-  "cordovaId": "com.whytewebonline.wsearch",
+  "description": "A POS book keep app",
+  "productName": "esele",
+  "cordovaId": "com.whytewebonline.esele",
   "capacitorId": "",
   "author": "Whyte Peter <whytewebonline@gmail.com>",
   "private": true,

@@ -21,7 +21,7 @@
 </template>
 <script>
 import AccountItems from "./AccountItems";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data: () => ({
     hello: {
@@ -35,11 +35,12 @@ export default {
     appAccountItems: AccountItems
   },
   methods: {
+    ...mapActions(["refreshCustomers"]),
     refresh(done) {
       setTimeout(() => {
-        this.accounts.push(this.hello);
+        this.refreshCustomers();
         done();
-      }, 1000);
+      }, 2000);
     }
   },
   computed: {

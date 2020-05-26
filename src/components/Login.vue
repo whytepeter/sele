@@ -11,7 +11,7 @@
       <q-card-section class="text-center row justify-center">
         <div class="row items-center ">
           <q-icon size="3rem" name="img:statics/sele-logo.svg" class="naira" />
-          <div class="q-ml-sm text-h4">Sele</div>
+          <div class="q-ml-sm text-h4">esele</div>
         </div>
       </q-card-section>
       <form>
@@ -79,7 +79,7 @@
         </q-card-actions>
         <q-card-section class="text-center q-py-xs">
           <div class=" text-grey-8 text-captionsubtitle2">
-            New to <strong>SELE</strong>?
+            New to <strong>ESELE</strong>?
             <q-btn
               no-caps
               flat

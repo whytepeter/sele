@@ -109,8 +109,8 @@ module.exports = function(/* ctx */) {
       workboxPluginMode: "GenerateSW", // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: "wsearch",
-        short_name: "wsearch",
+        name: "esele",
+        short_name: "esele",
         description: "A POS account search app",
         display: "standalone",
         orientation: "portrait",
@@ -149,7 +149,7 @@ module.exports = function(/* ctx */) {
     // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-      id: "com.whytewebonline.wsearch"
+      id: "com.whytewebonline.esele"
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
@@ -175,7 +175,7 @@ module.exports = function(/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "wsearch"
+        appId: "esele"
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
