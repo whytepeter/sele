@@ -217,7 +217,7 @@ export default {
   },
   data: () => ({
     modalView: "app-view-transaction-mobile",
-    modalAdd: "app-add-transaction-web",
+    modalAdd: "app-add-transaction-mobile",
     hide: "Hide",
     show: true,
     showIcon: "mdi-eye",
