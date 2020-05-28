@@ -26,6 +26,7 @@
             outlined
             v-model="user.email"
             placeholder="Email Address"
+           
             class="q-mb-md text-subtitle1"
             ><template v-slot:prepend>
               <q-icon name="email" color="primary" />
@@ -140,8 +141,10 @@ export default {
   computed: {
     ...mapGetters({
       error: "getAuthError",
-      loading: "getLoading"
+      loading: "getLoading",
+     
     })
-  }
+  },
+ 
 };
 </script>

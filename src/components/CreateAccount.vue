@@ -120,6 +120,32 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <q-dialog
+      v-model="redirect"
+      transition-show="scale"
+      transition-hide="scale"
+    >
+      <q-card class="bg-primary text-white" style="width: 300px">
+        <q-card-section>
+          <div class="text-h6">Registration Successful</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          Click to login
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white ">
+          <q-btn
+            flat
+            label="Login"
+            @click="closeRedirect"
+            color="primary"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 <script>
@@ -141,7 +167,11 @@ export default {
     }
   }),
   methods: {
-    ...mapMutations({ changeShow: "changeShow", setError: "setError" }),
+    ...mapMutations({
+      changeShow: "changeShow",
+      setError: "setError",
+      setRedirect: "setRedirect"
+    }),
     ...mapActions(["registerUser"]),
 
     togglevisibility() {
@@ -156,6 +186,10 @@ export default {
       }
     },
 
+    closeRedirect() {
+      this.switchTo();
+      this.setRedirect(false);
+    },
     switchTo() {
       this.setError(null);
       this.changeShow("app-login");
@@ -180,7 +214,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ error: "getAuthError", loading: "getLoading" })
+    ...mapGetters({
+      error: "getAuthError",
+      loading: "getLoading",
+      redirect: "isRedirect"
+    })
   }
 };
 </script>

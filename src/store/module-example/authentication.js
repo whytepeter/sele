@@ -52,7 +52,7 @@ const mutations = {
 };
 
 const actions = {
-  registerUser: ({ commit }, user) => {
+  registerUser: ({ commit, getters }, user) => {
     commit("setLoading", true);
     auth
       .createUserWithEmailAndPassword(user.email, user.password)
@@ -60,6 +60,7 @@ const actions = {
         commit("setLogin", false);
         commit("setError", null);
         commit("setLoading", false);
+        commit("setRedirect", true);
 
         db.collection("users")
           .doc(cred.user.uid)
@@ -73,6 +74,7 @@ const actions = {
       .catch(error => {
         commit("setError", error.message);
         commit("setLoading", false);
+        commit("setRedirect", false);
       });
   },
 
