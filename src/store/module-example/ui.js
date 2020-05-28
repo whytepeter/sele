@@ -12,7 +12,7 @@ const state = {
   },
 
   welcome: {
-    show: "app-create-account"
+    show: "app-login"
   }
 };
 

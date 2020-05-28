@@ -132,6 +132,7 @@ const actions = {
         console.log("logout");
         commit("setLogin", false);
         commit("setUser", null);
+
         this.$router.replace("/welcome");
       }
     });
