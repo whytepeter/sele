@@ -101,6 +101,7 @@
               @click="switchTo"
             />
           </div>
+          <q-btn flat color="primary" label="Powered by WhyteWeb" />
         </q-card-section>
       </form>
     </q-card-section>

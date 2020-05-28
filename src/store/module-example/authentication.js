@@ -1,6 +1,7 @@
 import { auth, db } from "../../boot/firebase";
 
 const state = {
+  redirect: false,
   login: true,
   loading: false,
   error: null,
@@ -15,6 +16,9 @@ const state = {
 const getters = {
   isLogin(state) {
     return state.login;
+  },
+  isRedirect(state) {
+    return state.redirect;
   },
 
   getUser(state) {
@@ -39,6 +43,9 @@ const mutations = {
   setLogin(state, mode) {
     state.login = mode;
   },
+  setRedirect(state, mode) {
+    state.redirect = mode;
+  },
   setError(state, error) {
     state.error = error;
   }
@@ -50,7 +57,7 @@ const actions = {
     auth
       .createUserWithEmailAndPassword(user.email, user.password)
       .then(cred => {
-        commit("setLogin", true);
+        commit("setLogin", false);
         commit("setError", null);
         commit("setLoading", false);
 
@@ -69,15 +76,18 @@ const actions = {
       });
   },
 
-  loginUser: ({ state, commit }, user) => {
+  loginUser({ state, commit }, user) {
     //start the loading
     commit("setLoading", true);
+    const self = this;
     auth
       .signInWithEmailAndPassword(user.email, user.password)
       .then(() => {
         commit("setLogin", true);
         commit("setError", null);
         commit("setLoading", false);
+
+        self.$router.push("/");
       })
       .catch(error => {
         commit("setError", error.message);
@@ -127,7 +137,7 @@ const actions = {
         //init customers account
         dispatch("initAccounts");
         dispatch("initTransactions");
-        this.$router.push("/");
+        //this.$router.push("/");
       } else {
         console.log("logout");
         commit("setLogin", false);
