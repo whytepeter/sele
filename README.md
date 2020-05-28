@@ -4,4 +4,4 @@ A POS app for small business to keep record of their dialy transactons and store
 
 ### visite site
 
-[sele.online](https://wwww.sele.online).
+[esele.online](https://esele.netlify.app).
