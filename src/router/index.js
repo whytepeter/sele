@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import routes from "./routes";
+
 import { auth } from "../boot/firebase";
 
 Vue.use(VueRouter);
@@ -15,7 +16,7 @@ Vue.use(VueRouter);
  * with the Router instance.
  */
 
-export default function(/* { store, ssrContext } */) {
+export default function({ store }) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
@@ -29,11 +30,10 @@ export default function(/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    const isAuth = auth.currentUser;
 
-    console.log(`isAuth = ${isAuth}`);
+    let isLogin = store.getters.isLogin;
 
-    if (requiresAuth && !isAuth) {
+    if (requiresAuth && !isLogin) {
       next("/welcome");
     } else {
       next();
