@@ -81,15 +81,13 @@ const actions = {
   loginUser({ state, commit }, user) {
     //start the loading
     commit("setLoading", true);
-    const self = this;
+
     auth
       .signInWithEmailAndPassword(user.email, user.password)
       .then(() => {
         commit("setLogin", true);
         commit("setError", null);
         commit("setLoading", false);
-
-        self.$router.push("/");
       })
       .catch(error => {
         commit("setError", error.message);
@@ -139,7 +137,7 @@ const actions = {
         //init customers account
         dispatch("initAccounts");
         dispatch("initTransactions");
-        //this.$router.push("/");
+        this.$router.push("/");
       } else {
         console.log("logout");
         commit("setLogin", false);

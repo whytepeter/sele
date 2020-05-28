@@ -76,21 +76,23 @@ const actions = {
     let accounts = [];
     let account;
 
-    db.collection(customerCol).onSnapshot(snapshot => {
-      accounts.length = 0; //very important! deletes the previous account
-      snapshot.docs.forEach(doc => {
-        //merge the unique ids and account details together
-        account = {
-          id: doc.id,
-          bank: doc.data().bank,
-          accName: doc.data().accName.toLowerCase(),
-          accNumber: doc.data().accNumber
-        };
-        accounts.push(account);
-      });
+    db.collection(customerCol)
+      .orderBy("bank")
+      .onSnapshot(snapshot => {
+        accounts.length = 0; //very important! deletes the previous account
+        snapshot.docs.forEach(doc => {
+          //merge the unique ids and account details together
+          account = {
+            id: doc.id,
+            bank: doc.data().bank,
+            accName: doc.data().accName.toLowerCase(),
+            accNumber: doc.data().accNumber
+          };
+          accounts.push(account);
+        });
 
-      commit("setAccounts", accounts);
-    });
+        commit("setAccounts", accounts);
+      });
   }
 };
 
