@@ -1,0 +1,7 @@
+{
+  "appId": "com.whytewebonline.esele",
+  "appName": "esele",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
