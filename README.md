@@ -1,4 +1,4 @@
-# Sele (sele)
+# Esele (esele)
 
 A POS app for small business to keep record of their dialy transactons and store customer account details
 
