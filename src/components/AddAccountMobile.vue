@@ -112,6 +112,7 @@ export default {
         "Sterling",
         "UBA",
         "Unity",
+        "Union",
         "WEMA",
         "Zenith"
       ],
