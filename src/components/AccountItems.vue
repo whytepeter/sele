@@ -11,7 +11,7 @@
         <q-item class="accountItem q-pr-none bg items-center justify-between">
           <q-item-section top thumbnail class="q-ml-none">
             <img
-              :src="'statics/banks/' + account.bank + '.png'"
+              :src="'statics/' + account.bank + '.png'"
               :alt="account.bank"
               class="bankImg"
             />

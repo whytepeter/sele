@@ -23,7 +23,7 @@
             <div class="q-pa-sm row justify-between bg-grey-2 rounded-borders">
               <div class="col-4 col-sm-3">
                 <img
-                  :src="'statics/banks/' + account.bank + '.png'"
+                  :src="'statics/' + account.bank + '.png'"
                   :alt="account.bank"
                   style="width: 80px; height: 50px; border: 1px solid #dddd"
                   class="rounded-borders"
